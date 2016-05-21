@@ -1,0 +1,51 @@
+$focus-color: teal;
+$focus-color-invalid: red;
+
+.card {
+  margin-top: 60px;
+  .card-content {
+    form[name='lookup'] {
+      .input-field {
+        margin-top: 0;
+        input[type='email']#email {
+          margin-bottom: 0;
+          
+          &:focus {
+            border-bottom: 1px solid $focus-color !important;
+            box-shadow: 0 1px 0 0 $focus-color !important;
+          }
+          
+          &:focus + label {
+            color: $focus-color;
+          }
+          
+          &.valid {
+            border-bottom: 1px solid $focus-color;
+            box-shadow: 0 1px 0 0 $focus-color;
+          }
+          
+          &.invalid {
+            border-bottom: 1px solid $focus-color-invalid;
+            box-shadow: 0 1px 0 0 $focus-color-invalid;
+          }
+        }
+        .error-messages {
+          font-size: 12px;
+          margin-top: 5px;
+          color: red;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+
+.credentials-list {
+  margin-top: 50px;
+  h5 {
+    margin-bottom: 40px;
+    .list-head {
+      border-bottom: 1px solid #BCBCBC;
+    }
+  }
+}

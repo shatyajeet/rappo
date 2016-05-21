@@ -1,0 +1,25 @@
+{
+  "name": "rappo",
+  "version": "1.0.0",
+  "description": "Rapportive for credentials",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "browserify src/js/app.js > src/assets/rappo.js",
+    "build:css": "node-sass src/css/style.scss src/assets/rappo.css",
+    "prebuild": "mkdir -p src/assets",
+    "postinstall": "cp ./node_modules/materialize-css/js/date_picker/picker.js ./node_modules/materialize-css/bin"
+  },
+  "author": "Satyajeet Parida (shatyajeet@gmail.com)",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.5",
+    "angular-messages": "^1.5.5",
+    "jquery": "^2.2.4",
+    "materialize-css": "^0.97.6"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "node-sass": "^3.7.0"
+  }
+}

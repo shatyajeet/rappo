@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="rappoApp">
+  <head>
+    <meta charset="UTF-8">
+    <title>Rapportive for credentials</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <link rel="stylesheet" href="src/assets/rappo.css">
+  </head>
+  <body>
+    <div class="top-header teal white-text">
+      <h3>Rapportive for credentials</h3>
+      <p>Look up credentials for user at the click of a button. Just enter the email address of the user and press "LOOK UP" and voila!</p>
+    </div>
+    <div class="container">
+      <div ng-controller="FormController as formCtrl">
+        <div class="row">
+          <div class="col l8 offset-l2 m8 offset-m2 s12">
+            <div class="card">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col s12">
+                    <div class="center teal-text">Give it a try!</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <form name="lookup" class="col s12" ng-submit="lookup.$valid && formCtrl.getCredentials($event)">
+                    <div class="row">
+                      <div class="input-field col l9 m8 s8">
+                        <input type="email" id="email" name="email" ng-model="formCtrl.lookup.email" required validate>
+                        <label for="email">Enter email address</label>
+                        <div class="error-messages" ng-messages="lookup.email.$error" ng-show="lookup.email.$touched">
+                          <div ng-message="required">You did not enter an email address</div>
+                          <div ng-message="email">You did not enter a valid email address</div>
+                        </div>
+                      </div>
+                      <div class="col l3 m4 s4">
+                        <button type="submit" class="waves-effect waves-light btn right" ng-class="{'disabled': lookup.$invalid || formCtrl.fetchingCredentials}" ng-disabled="lookup.$invalid || formCtrl.fetchingCredentials">Look up</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="credentials-list" ng-if="formCtrl.credentials.length">
+          <h5><span class="list-head">Credentials for <span class="teal-text">{{formCtrl.fetchedFor}}</span> <span class="credentialCount grey-text">({{formCtrl.credentials.length}} credentials)</span></span></h5>
+          <div class="row" ng-repeat="credential in formCtrl.credentials">
+            <div class="col l4 m4 s4">
+              <img default-src="https://placehold.it/321x248" class="responsive-img" ng-src="https://s3.amazonaws.com/staging_accredible_api_mails/{{credential.id}}" />
+            </div>
+            <div class="col l8 m8 s8">
+              <h5 class="course-name">{{credential.name}} <span class="completion grey-text" ng-if="credential.complete">(Completed!)</span></h5>
+              <div class="description">{{credential.description}}</div>
+              <div class="issueDate">Issued <span>{{credential.issued_on | date:'EEE, MMM dd, yyyy'}}</span></div>
+              <div><a target="_blank" ng-href="https://www.credential.net/{{credential.id}}">View credential in detail</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="center" ng-if="!formCtrl.credentials.length && formCtrl.fetchingCredentials">
+          <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="center" ng-if="!formCtrl.credentials.length && formCtrl.fetchedOnce && !formCtrl.fetchingCredentials">
+          <p>Oops! We couldn't find any credentials for <span class="teal-text">{{formCtrl.fetchedFor}}</span>. May be try another email address?</p>
+        </div>
+      </div>
+    </div>
+    <script src="src/assets/rappo.js"></script>
+  </body>
+</html>
